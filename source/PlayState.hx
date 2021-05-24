@@ -109,6 +109,8 @@ class PlayState extends MusicBeatState
 	var bottomBoppers:FlxSprite;
 	var santa:FlxSprite;
 
+	var boppers:FlxSprite;
+
 	var bgGirls:BackgroundGirls;
 	var wiggleShit:WiggleEffect = new WiggleEffect();
 
@@ -232,27 +234,35 @@ class PlayState extends MusicBeatState
 			case 'rapadagna-rumble':
 				{
 				  defaultCamZoom = 1.00;
-				  curStage = 'day';
+				  curStage = 'oasis';
 				  var bg:FlxSprite = new FlxSprite(-100).loadGraphic(Paths.image('custom/background1', 'weekcustom'));
-				  bg.scrollFactor.set(0.1, 0.1);
+				  bg.scrollFactor.set(0.3, 0.3);
+				  bg.updateHitbox();
 				  add(bg);
+
+				  boppers = new FlxSprite(bg.x,bg.y-200);
+				  boppers.frames = Paths.getSparrowAtlas('custom/bottomBop');
+				  boppers.animation.addByPrefix('bop', "Bottom Level Boppers", 24, false);
+				  boppers.antialiasing = true;
+				  boppers.scrollFactor.set(0.33, 0.33);
+				  boppers.setGraphicSize(Std.int(boppers.width * 0.85));
+				  boppers.updateHitbox();
+
+				  var ground:FlxSprite = new FlxSprite(-650, 400).loadGraphic(Paths.image('custom/foreground1'));
+				  ground.setGraphicSize(Std.int(ground.width * 1.1));
+				  ground.updateHitbox();
+				  ground.antialiasing = true;
+				  ground.active = false;
+				  add(ground);
 				}
 			case 'heart-of-icegrave':
-				{
-					defaultCamZoom = 1.00;
-					curStage = 'sunset';
-					var bg:FlxSprite = new FlxSprite(-100).loadGraphic(Paths.image('custom/background2', 'weekcustom'));
-					bg.scrollFactor.set(0.1, 0.1);
-					add(bg);
-				  }
+			{
+
+			}
 			case 'monster-murmer':
-				{
-					defaultCamZoom = 1.00;
-					curStage = 'night';
-					var bg:FlxSprite = new FlxSprite(-100).loadGraphic(Paths.image('custom/background3', 'weekcustom'));
-					bg.scrollFactor.set(0.1, 0.1);
-					add(bg);
-				  }
+			{
+
+			}
                         case 'spookeez' | 'monster' | 'south': 
                         {
                                 curStage = 'spooky';
@@ -564,33 +574,6 @@ class PlayState extends MusicBeatState
 		                            add(waveSpriteFG);
 		                    */
 		          }
-				  case 'rapadanga-rumble':
-				  {
-					defaultCamZoom = 0.8;
-					curStage = 'stage';
-					var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('stageback'));
-					bg.antialiasing = true;
-					bg.scrollFactor.set(0.9, 0.9);
-					bg.active = false;
-					add(bg);
-
-					var stageFront:FlxSprite = new FlxSprite(-650, 600).loadGraphic(Paths.image('stagefront'));
-					stageFront.setGraphicSize(Std.int(stageFront.width * 1.1));
-					stageFront.updateHitbox();
-					stageFront.antialiasing = true;
-					stageFront.scrollFactor.set(0.9, 0.9);
-					stageFront.active = false;
-					add(stageFront);
-
-					var stageCurtains:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('stagecurtains'));
-					stageCurtains.setGraphicSize(Std.int(stageCurtains.width * 0.9));
-					stageCurtains.updateHitbox();
-					stageCurtains.antialiasing = true;
-					stageCurtains.scrollFactor.set(1.3, 1.3);
-					stageCurtains.active = false;
-
-					add(stageCurtains);
-				  }
 		          default:
 		          {
 		                  defaultCamZoom = 0.9;
@@ -654,6 +637,8 @@ class PlayState extends MusicBeatState
 					camPos.x += 600;
 					tweenCamIn();
 				}
+			case 'asha' | 'asha_night' | 'asha_sunset':
+				dad.x -= 200;
 
 			case "spooky":
 				dad.y += 200;
@@ -2470,6 +2455,8 @@ class PlayState extends MusicBeatState
 
 		switch (curStage)
 		{
+			case 'oasis':
+				// boppers.animation.play('bop', true);
 			case 'school':
 				bgGirls.dance();
 
