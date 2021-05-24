@@ -240,15 +240,15 @@ class PlayState extends MusicBeatState
 				  bg.updateHitbox();
 				  add(bg);
 
-				  boppers = new FlxSprite(bg.x,bg.y-200);
-				  boppers.frames = Paths.getSparrowAtlas('custom/bottomBop');
-				  boppers.animation.addByPrefix('bop', "Bottom Level Boppers", 24, false);
-				  boppers.antialiasing = true;
-				  boppers.scrollFactor.set(0.33, 0.33);
-				  boppers.setGraphicSize(Std.int(boppers.width * 0.85));
-				  boppers.updateHitbox();
+				//   boppers = new FlxSprite(bg.x,bg.y-200);
+				//   boppers.frames = Paths.getSparrowAtlas('custom/bottomBop');
+				//   boppers.animation.addByPrefix('bop', "Bottom Level Boppers", 24, false);
+				//   boppers.antialiasing = true;
+				//   boppers.scrollFactor.set(0.33, 0.33);
+				//   boppers.setGraphicSize(Std.int(boppers.width * 0.85));
+				//   boppers.updateHitbox();
 
-				  var ground:FlxSprite = new FlxSprite(-650, 400).loadGraphic(Paths.image('custom/foreground1'));
+				  var ground:FlxSprite = new FlxSprite(-650, 400).loadGraphic(Paths.image('custom/foreground1', 'weekcustom'));
 				  ground.setGraphicSize(Std.int(ground.width * 1.1));
 				  ground.updateHitbox();
 				  ground.antialiasing = true;
