@@ -46,6 +46,7 @@ using StringTools;
 
 class PlayState extends MusicBeatState
 {
+	private var crowd:FlxSprite;
 	public static var curStage:String = '';
 	public static var SONG:SwagSong;
 	public static var isStoryMode:Bool = false;
@@ -108,8 +109,6 @@ class PlayState extends MusicBeatState
 	var upperBoppers:FlxSprite;
 	var bottomBoppers:FlxSprite;
 	var santa:FlxSprite;
-
-	var boppers:FlxSprite;
 
 	var bgGirls:BackgroundGirls;
 	var wiggleShit:WiggleEffect = new WiggleEffect();
@@ -229,39 +228,54 @@ class PlayState extends MusicBeatState
 		DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconRPC);
 		#end
 
+
+
 		switch (SONG.song.toLowerCase())
 		{
 			case 'rapadagna-rumble':
 				{
-				  defaultCamZoom = 1.00;
-				  curStage = 'oasis';
-				  var bg:FlxSprite = new FlxSprite(-100).loadGraphic(Paths.image('custom/background1', 'weekcustom'));
-				  bg.scrollFactor.set(0.3, 0.3);
-				  bg.updateHitbox();
-				  add(bg);
+					defaultCamZoom = 0.90;
+					curStage = 'oasis';
 
-				//   boppers = new FlxSprite(bg.x,bg.y-200);
-				//   boppers.frames = Paths.getSparrowAtlas('custom/bottomBop');
-				//   boppers.animation.addByPrefix('bop', "Bottom Level Boppers", 24, false);
-				//   boppers.antialiasing = true;
-				//   boppers.scrollFactor.set(0.33, 0.33);
-				//   boppers.setGraphicSize(Std.int(boppers.width * 0.85));
-				//   boppers.updateHitbox();
+					var bg:FlxSprite = new FlxSprite(-1100, -975).loadGraphic(Paths.image('custom/background1', 'weekcustom'));
+					// bg.scrollFactor.set();
+					bg.scale.set(1.3, 1.3);
+					bg.updateHitbox();
+					add(bg);
 
-				  var ground:FlxSprite = new FlxSprite(-650, 400).loadGraphic(Paths.image('custom/foreground1', 'weekcustom'));
-				  ground.setGraphicSize(Std.int(ground.width * 1.1));
-				  ground.updateHitbox();
-				  ground.antialiasing = true;
-				  ground.active = false;
-				  add(ground);
+					// var ground:FlxSprite = new FlxSprite(0, 556).loadGraphic(Paths.image('custom/foreground1', 'weekcustom'));
+					// ground.setGraphicSize(Std.int(ground.width * 1.1));
+					// ground.updateHitbox();
+					// add(ground);
+
+					// crowd = new FlxSprite(ground.x, ground.y+30);
+					// crowd.frames = Paths.getSparrowAtlas('custom/bottomBop');
+					// crowd.animation.addByPrefix('crowd', "Crowd", 24, true);
+					// // crowd.scrollFactor.set(0.33, 0.33);
+					// crowd.setGraphicSize(Std.int(crowd.width * 0.85));
+					// crowd.updateHitbox();
 				}
 			case 'heart-of-icegrave':
 			{
+				defaultCamZoom = 0.90;
+				curStage = 'oasis';
 
+				var bg:FlxSprite = new FlxSprite(-1100, -975).loadGraphic(Paths.image('custom/background2', 'weekcustom'));
+				// bg.scrollFactor.set();
+				bg.scale.set(1.3, 1.3);
+				bg.updateHitbox();
+				add(bg);
 			}
 			case 'monster-murmer':
 			{
-
+				defaultCamZoom = 0.90;
+				curStage = 'oasis';
+				
+				var bg:FlxSprite = new FlxSprite(-1100, -975).loadGraphic(Paths.image('custom/background3', 'weekcustom'));
+				// bg.scrollFactor.set();
+				bg.scale.set(1.3, 1.3);
+				bg.updateHitbox();
+				add(bg);
 			}
                         case 'spookeez' | 'monster' | 'south': 
                         {
@@ -271,7 +285,7 @@ class PlayState extends MusicBeatState
 		                  var hallowTex = Paths.getSparrowAtlas('halloween_bg');
 
 	                          halloweenBG = new FlxSprite(-200, -100);
-		                  halloweenBG.frames = hallowTex;
+								halloweenBG.frames = hallowTex;
 	                          halloweenBG.animation.addByPrefix('idle', 'halloweem bg0');
 	                          halloweenBG.animation.addByPrefix('lightning', 'halloweem bg lightning strike', 24, false);
 	                          halloweenBG.animation.play('idle');
@@ -639,6 +653,7 @@ class PlayState extends MusicBeatState
 				}
 			case 'asha' | 'asha_night' | 'asha_sunset':
 				dad.x -= 200;
+				dad.y += 100;
 
 			case "spooky":
 				dad.y += 200;
@@ -713,6 +728,7 @@ class PlayState extends MusicBeatState
 
 		add(dad);
 		add(boyfriend);
+		FlxG.log.add("bf.x" + boyfriend.getGraphicMidpoint().x + "bf.y" + boyfriend.getGraphicMidpoint().y);
 
 		var doof:DialogueBox = new DialogueBox(false, dialogue);
 		// doof.x += 70;
@@ -2455,8 +2471,8 @@ class PlayState extends MusicBeatState
 
 		switch (curStage)
 		{
-			case 'oasis':
-				// boppers.animation.play('bop', true);
+			// case 'oasis':
+				// crowd.animation.play('crowd', true);
 			case 'school':
 				bgGirls.dance();
 
