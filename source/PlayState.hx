@@ -46,7 +46,7 @@ using StringTools;
 
 class PlayState extends MusicBeatState
 {
-	private var crowd:FlxSprite;
+	var oasisCrowd:FlxSprite;
 	public static var curStage:String = '';
 	public static var SONG:SwagSong;
 	public static var isStoryMode:Bool = false;
@@ -234,48 +234,38 @@ class PlayState extends MusicBeatState
 		{
 			case 'rapadagna-rumble':
 				{
-					defaultCamZoom = 0.90;
+					defaultCamZoom = 0.8;
 					curStage = 'oasis';
 
-					var bg:FlxSprite = new FlxSprite(-1100, -975).loadGraphic(Paths.image('custom/background1', 'weekcustom'));
-					// bg.scrollFactor.set();
-					bg.scale.set(1.3, 1.3);
+					var bg:FlxSprite = new FlxSprite(-880, -960).loadGraphic(Paths.image('custom/background1', 'weekcustom'));
+					bg.scrollFactor.set(0.6, 1);
+					bg.scale.set(1.2, 1.2);
 					bg.updateHitbox();
 					add(bg);
 
-					// var ground:FlxSprite = new FlxSprite(0, 556).loadGraphic(Paths.image('custom/foreground1', 'weekcustom'));
-					// ground.setGraphicSize(Std.int(ground.width * 1.1));
-					// ground.updateHitbox();
-					// add(ground);
+					oasisCrowd = new FlxSprite(-615, -480);
+					oasisCrowd.frames = Paths.getSparrowAtlas('custom/crowd', 'weekcustom');
+					oasisCrowd.scale.set(1.6, 1.6);
+					oasisCrowd.scrollFactor.set(0.6, 1);
+					oasisCrowd.setGraphicSize(Std.int(oasisCrowd.width * 0.85));
+					oasisCrowd.updateHitbox();
+					oasisCrowd.animation.addByPrefix('bop', "Crowd0", 24, true);
+					oasisCrowd.animation.play('bop', true);
+					add(oasisCrowd);
 
-					// crowd = new FlxSprite(ground.x, ground.y+30);
-					// crowd.frames = Paths.getSparrowAtlas('custom/bottomBop');
-					// crowd.animation.addByPrefix('crowd', "Crowd", 24, true);
-					// // crowd.scrollFactor.set(0.33, 0.33);
-					// crowd.setGraphicSize(Std.int(crowd.width * 0.85));
-					// crowd.updateHitbox();
+					var ground:FlxSprite = new FlxSprite(-880, -960).loadGraphic(Paths.image('custom/foreground1', 'weekcustom'));
+					ground.scrollFactor.set(1.4, 1);
+					ground.scale.set(1.2, 1.2);
+					ground.updateHitbox();
+					add(ground);
 				}
 			case 'heart-of-icegrave':
 			{
-				defaultCamZoom = 0.90;
-				curStage = 'oasis';
 
-				var bg:FlxSprite = new FlxSprite(-1100, -975).loadGraphic(Paths.image('custom/background2', 'weekcustom'));
-				// bg.scrollFactor.set();
-				bg.scale.set(1.3, 1.3);
-				bg.updateHitbox();
-				add(bg);
 			}
 			case 'monster-murmer':
 			{
-				defaultCamZoom = 0.90;
-				curStage = 'oasis';
-				
-				var bg:FlxSprite = new FlxSprite(-1100, -975).loadGraphic(Paths.image('custom/background3', 'weekcustom'));
-				// bg.scrollFactor.set();
-				bg.scale.set(1.3, 1.3);
-				bg.updateHitbox();
-				add(bg);
+
 			}
                         case 'spookeez' | 'monster' | 'south': 
                         {
@@ -423,8 +413,8 @@ class PlayState extends MusicBeatState
 		                  bottomBoppers.frames = Paths.getSparrowAtlas('christmas/bottomBop');
 		                  bottomBoppers.animation.addByPrefix('bop', 'Bottom Level Boppers', 24, false);
 		                  bottomBoppers.antialiasing = true;
-	                          bottomBoppers.scrollFactor.set(0.9, 0.9);
-	                          bottomBoppers.setGraphicSize(Std.int(bottomBoppers.width * 1));
+							bottomBoppers.scrollFactor.set(0.9, 0.9);
+							bottomBoppers.setGraphicSize(Std.int(bottomBoppers.width * 1));
 		                  bottomBoppers.updateHitbox();
 		                  add(bottomBoppers);
 
@@ -651,9 +641,6 @@ class PlayState extends MusicBeatState
 					camPos.x += 600;
 					tweenCamIn();
 				}
-			case 'asha' | 'asha_night' | 'asha_sunset':
-				dad.x -= 200;
-				dad.y += 100;
 
 			case "spooky":
 				dad.y += 200;
@@ -687,6 +674,23 @@ class PlayState extends MusicBeatState
 		// REPOSITIONING PER STAGE
 		switch (curStage)
 		{
+			case 'oasis':
+				boyfriend.scale.set(0.8, 0.8);
+				dad.scale.set(0.8, 0.8);
+				boyfriend.updateHitbox();
+				dad.updateHitbox();
+
+				boyfriend.x +=150;
+
+				dad.x -=50;
+				dad.y += 100;
+
+				// not like it matters because gf isn't here
+				gf.x -= 300;
+
+				boyfriend.x -= 300;
+				dad.x -= 300;
+
 			case 'limo':
 				boyfriend.y -= 220;
 				boyfriend.x += 260;
@@ -720,7 +724,8 @@ class PlayState extends MusicBeatState
 				gf.y += 300;
 		}
 		
-		add(gf);
+		if (curStage.toLowerCase() != 'oasis')
+			add(gf);
 
 		// Shitty layering but whatev it works LOL
 		if (curStage == 'limo')
@@ -728,7 +733,8 @@ class PlayState extends MusicBeatState
 
 		add(dad);
 		add(boyfriend);
-		FlxG.log.add("bf.x" + boyfriend.getGraphicMidpoint().x + "bf.y" + boyfriend.getGraphicMidpoint().y);
+
+		FlxG.log.add("bf.x" + boyfriend.x + "bf.y" + boyfriend.y);
 
 		var doof:DialogueBox = new DialogueBox(false, dialogue);
 		// doof.x += 70;
@@ -2471,8 +2477,6 @@ class PlayState extends MusicBeatState
 
 		switch (curStage)
 		{
-			// case 'oasis':
-				// crowd.animation.play('crowd', true);
 			case 'school':
 				bgGirls.dance();
 
