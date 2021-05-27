@@ -261,7 +261,20 @@ class PlayState extends MusicBeatState
 				}
 			case 'heart-of-icegrave':
 			{
+				defaultCamZoom = 0.8;
+				curStage = 'oasis';
 
+				var bg:FlxSprite = new FlxSprite(-880, -960).loadGraphic(Paths.image('custom/background2', 'weekcustom'));
+				bg.scrollFactor.set(0.6, 1);
+				bg.scale.set(1.2, 1.2);
+				bg.updateHitbox();
+				add(bg);
+
+				var ground:FlxSprite = new FlxSprite(-880, -960).loadGraphic(Paths.image('custom/foreground2', 'weekcustom'));
+				ground.scrollFactor.set(1.4, 1);
+				ground.scale.set(1.2, 1.2);
+				ground.updateHitbox();
+				add(ground);
 			}
 			case 'monster-murmer':
 			{
@@ -885,7 +898,7 @@ class PlayState extends MusicBeatState
 		red.scrollFactor.set();
 
 		var senpaiEvil:FlxSprite = new FlxSprite();
-		senpaiEvil.frames = Paths.getSparrowAtlas('weeb/senpaiCrazy');
+		senpaiEvil.frames = Paths.getSparrowAtlas('weeb/senpaiCrazy', 'week6');
 		senpaiEvil.animation.addByPrefix('idle', 'Senpai Pre Explosion', 24, false);
 		senpaiEvil.setGraphicSize(Std.int(senpaiEvil.width * 6));
 		senpaiEvil.scrollFactor.set();
@@ -934,14 +947,13 @@ class PlayState extends MusicBeatState
 								{
 									remove(senpaiEvil);
 									remove(red);
-									FlxG.camera.fade(FlxColor.WHITE, 0.01, true, function()
+									FlxG.camera.fade(FlxColor.WHITE, 1.6, true, function()
 									{
-										add(dialogueBox);
+										FlxG.camera.fade(FlxColor.WHITE, 2.2, false, function()
+										{
+											add(dialogueBox);
+										});
 									}, true);
-								});
-								new FlxTimer().start(3.2, function(deadTime:FlxTimer)
-								{
-									FlxG.camera.fade(FlxColor.WHITE, 1.6, false);
 								});
 							}
 						});
@@ -1201,7 +1213,7 @@ class PlayState extends MusicBeatState
 			switch (curStage)
 			{
 				case 'school' | 'schoolEvil':
-					babyArrow.loadGraphic(Paths.image('weeb/pixelUI/arrows-pixels'), true, 17, 17);
+					babyArrow.loadGraphic(Paths.image('weeb/pixelUI/arrows-pixels', 'week6'), true, 17, 17);
 					babyArrow.animation.add('green', [6]);
 					babyArrow.animation.add('red', [7]);
 					babyArrow.animation.add('blue', [5]);
